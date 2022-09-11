@@ -1,5 +1,5 @@
 /*
- * dlconfiguration.h
+ * configuration.h
  *
  * BSD 3-Clause License
  * 
@@ -123,7 +123,6 @@ typedef void* dlptr_t; // pointer type for raw data pointers produced by the dls
     #define DL_NOW      DL_LAZY
     #define DL_LOCAL    DL_LAZY
     #define DL_GLOBAL   DL_LAZY
-    #define DL_TRACE    DL_LAZY
     #define DL_NODELETE DL_LAZY
     #define DL_NOLOAD   DL_LAZY
 
