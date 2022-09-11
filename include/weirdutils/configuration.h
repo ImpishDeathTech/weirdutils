@@ -78,7 +78,7 @@ typedef void* dlptr_t; // pointer type for raw data pointers produced by the dls
          * 
          * @FreeBSD Manual :
          *      Symbols from this shared object and its directed acyclic graph (DAG) of needed objects will be available for resolving unde-
-	     *      fined references from all other shared objects.
+	 *      fined references from all other shared objects.
          */
         #define DL_LOCAL 0x00000000
 
@@ -86,7 +86,7 @@ typedef void* dlptr_t; // pointer type for raw data pointers produced by the dls
          *
          * @FreeBSD Manual :
          *      Symbols in this shared object and its DAG of needed objects will be available for resolving undefined references only from
-		 *      other objects in the same DAG.  This is the default, but it may be specified explicitly with this flag.  
+	 *      other objects in the same DAG.  This is the default, but it may be specified explicitly with this flag.  
          */
         #define DL_GLOBAL 0x00000100
             
@@ -98,7 +98,7 @@ typedef void* dlptr_t; // pointer type for raw data pointers produced by the dls
 
          /* @FreeBSD Manual : 
           *     Only return valid handle for the object if it is already loaded in the process address space, otherwise NULL is returned.
-		  *     Other mode flags may be specified, which will be applied for promotion for the found object.
+	  *     Other mode flags may be specified, which will be applied for promotion for the found object.
           */
         #define DL_NOLOAD 0x00000004
 
