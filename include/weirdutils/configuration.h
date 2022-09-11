@@ -1,5 +1,5 @@
 /*
- * configuration.h
+ * dlconfiguration.h
  *
  * BSD 3-Clause License
  * 
@@ -60,54 +60,49 @@ typedef void* dlptr_t; // pointer type for raw data pointers produced by the dls
 
         /* Realocations are preformed at an implementation-dependant time 
          * 
-         * @FreeBSD : 
+         * @FreeBSD Manual : 
          *      Each external function reference is resolved when the function is first called.
          */
-        #define DL_LAZY   RTLD_LAZY
+        #define DL_LAZY 0x00000001
         
         /* Realocations are preformed when the object is loaded
          * 
-         * @FreeBSD :
+         * @FreeBSD Manual :
          *      All external function references are bound immediately by dlopen().
-         *      RTLD_LAZY is normally preferred, for reasons of efficiency.  However, RTLD_NOW is useful to ensure that any undefined symbols are discovered
-         *      during the call to dlopen().
+         *      RTLD_LAZY (DL_LAZY) is normally preferred, for reasons of efficiency.  However, RTLD_NOW (DL_NOW) is useful to ensure that any undefined symbols are discovered
+         *      during the call to dlopen() (dlhandle()/dlhandlex()).
          */
-        #define DL_NOW    RTLD_NOW      // Realocations are preformed when the object is loaded
+        #define DL_NOW 0x00000002
         
         // One of the following flags may be ORed into the mode argument
 
         /* All symbols are not made available for realocation processing by other modules
          * 
-         * @FreeBSD :
+         * @FreeBSD Manual :
          *      Symbols from this shared object and its directed acyclic graph (DAG) of needed objects will be available for resolving unde-
 	     *      fined references from all other shared objects.
          */
-        #define DL_LOCAL  RTLD_LOCAL
+        #define DL_LOCAL 0x00000000
 
         /* All symbols are made available for realocation processing by other modules
          *
-         * @FreeBSD :
+         * @FreeBSD Manual :
          *      Symbols in this shared object and its DAG of needed objects will be available for resolving undefined references only from
 		 *      other objects in the same DAG.  This is the default, but it may be specified explicitly with this flag.  
          */
-        #define DL_GLOBAL RTLD_GLOBAL
-
-        /* When set, causes dynamic linker to exit after loading all objects needed by this shared object and printing a summary which
-		 * includes the absolute pathnames of all objects, to standard output.  With this flag dlopen() will return to the caller only in
-		 * the case of error.
-         *
-         */
-        #define DL_TRACE RTLD_TRACE
+        #define DL_GLOBAL 0x00000100
             
-        /* Prevents unload of the loaded object on dlclose().	The same behaviour may be requested by -z nodelete option of the static
-		 * linker ld.
+        /* @FreeBSD Manual :
+         *      Prevents unload of the loaded object on dlclose() (dlfree()).	
+         *      The same behaviour may be requested by -z nodelete option of the static linker ld.
          */
-        #define DL_NODELETE RTLD_NODELETE
+        #define DL_NODELETE 0x00001000
 
-         /* Only return valid handle for the object if it is already loaded in the process address space, otherwise NULL is returned.
-		  * Other mode flags may be specified, which will be applied for promotion for the found object.
+         /* @FreeBSD Manual : 
+          *     Only return valid handle for the object if it is already loaded in the process address space, otherwise NULL is returned.
+		  *     Other mode flags may be specified, which will be applied for promotion for the found object.
           */
-        #define DL_NOLOAD RTLD_NOLOAD
+        #define DL_NOLOAD 0x00000004
 
         typedef void*       dlhandle_t; // the module file handle
         typedef const char* dlcstr_t;   // a portable type definition of the cstring
