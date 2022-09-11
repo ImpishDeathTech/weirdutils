@@ -1,25 +1,26 @@
 #include <weirdutils/string.hxx>
 #include <cctype>
+#include <iomanip>
 
 namespace weird {
-    bool is_suffix(std::string& target_, std::string suffix_) {
+    bool is_suffix(std::string target_, std::string suffix_) {
         if (target_.length() < suffix_.length())
             return false;
         
         return target_.compare(target_.length() - suffix_.length(), suffix_.length(), suffix_) == 0;
     }
 
-    bool is_prefix(std::string& target_, std::string prefix_) {
+    bool is_prefix(std::string target_, std::string prefix_) {
         if (target_.length() < prefix_.length())
             return false;
 
-        return target_.compare(0, prefix_.length(), prefix_);
+        return target_.compare(0, prefix_.length() + 1, prefix_);
     }
 
-    std::string substring(std::string& target_, std::size_t fromLeft_, std::size_t toRight_) {
+    std::string substring(std::string target_, std::size_t fromLeft_, std::size_t toRight_) {
         std::string out;
 
-        for (std::size_t i = 0; i < target_.length(); i++) {
+        for (std::size_t i = 0; i < target_.length() - toRight_; i++) {
             if (i < fromLeft_)
                 continue;
             else if (i == toRight_) 
@@ -32,7 +33,7 @@ namespace weird {
         return out;
     }
 
-    stringvec_t split(std::string& target_, std::string& pattern_) {
+    stringvec_t split(std::string target_, std::string pattern_) {
         stringvec_t    out;
         std::string    current;     
 
@@ -40,7 +41,9 @@ namespace weird {
             current += (*i);
             
             if (is_suffix(current, pattern_)) {
-                current = substring(current, 0, pattern_.length() - 1);
+                while (current.length() != current.length() - pattern_.length())
+                    current.pop_back();
+                
                 out.push_back(current);
                 current = "";
             }
@@ -49,44 +52,46 @@ namespace weird {
         return out;
     }
 
-    bool is_float(std::string& target_) {
-        std::uint8_t dotCount = 0x00;
-
-        if (is_suffix(target_, "f")) {
-            std::string target = substring(target_, 0, target_.length() - 2);
-
-            if (is_prefix(target, "-"))
-                target = substring(target_, 1, target_.length() - 1);
-
-            for (std::string::iterator i = target.begin(); i != target.end(); ++i) {
-                if ((*i) == '.')
-                    dotCount++;
-                
-                else if (isdigit(*i))
-                    continue;
-                
-                else return false;
-
-                if (dotCount > 0x01)
-                    return false;
-            }
-
+    bool is_boolean(std::string target_) {
+        if ((target_ == "true" || target_ == "TRUE") 
+        or  (target_ == "false" || target_ == "FALSE"))
             return true;
-        }
-
         return false;
     }
 
-    bool is_integer(std::string& target_) {
+    bool is_double(std::string target_) {
+        std::uint8_t dotCount = 0x00;
         std::string target;
 
-        if (is_suffix(target_, "i") || is_suffix(target_, "d"))
-            target = substring(target_, 0, target_.length() - 2);
-        else
-            target = target_;
+        if (is_suffix(target_, "f") || is_suffix(target_, "i") || is_suffix(target_, "d"))
+            return false;
+
+        if (is_prefix(target_, "-"))
+            target = substring(target_, 1, 0);
+        
+        else target = target_;
+
+        for (std::string::iterator i = target.begin(); i != target.end(); ++i) {
+            if ((*i) == '.')
+                dotCount++;
+            
+            else if (isdigit(*i))
+                continue;
+            
+            else return false;
+
+            if (dotCount > 0x01)
+                return false;
+        }
+
+        return true;
+    }
+
+    bool is_integer(std::string target_) {
+        std::string target = target_;
         
         if (is_prefix(target, "-"))
-            target = substring(target, 1, target.length() - 1);
+            target = substring(target, 1, 0);
         
         for (std::string::iterator i = target.begin(); i != target.end(); ++i) {
             if (!isdigit(*i))
@@ -96,15 +101,33 @@ namespace weird {
         return true;
     }
 
-    bool is_hex8(std::string& target_) {
+    bool is_x8(std::string target_) {
         std::string target;
 
-        if (is_suffix(target_, "x") || is_suffix(target_, "h"))
-            target = substring(target_, 0, target.length() - 2);
+        if (is_prefix(target_, "0x"))
+            target = substring(target_, 2, 0);
 
         else target = target_;
 
-        if (is_prefix(target, "-") || target.length() != 2)
+        if (target.length() != 2)
+            return false; 
+
+        for (std::string::iterator i = target.begin(); i != target.end(); ++i) {
+            if (!isxdigit(*i))
+                return false;
+        }
+        return true;
+    }
+
+    bool is_x16(std::string target_) {
+        std::string target;
+
+        if (is_prefix(target_, "0x"))
+            target = substring(target_, 2, 0);
+
+        else return false;
+
+        if (target.length() != 4)
             return false;
 
         for (std::string::iterator i = target.begin(); i != target.end(); ++i) {
@@ -114,15 +137,15 @@ namespace weird {
         return true;
     }
 
-    bool is_hex16(std::string& target_) {
+    bool is_x32(std::string target_) {
         std::string target;
 
-        if (is_suffix(target_, "x") || is_suffix(target_, "h"))
-            target = substring(target_, 0, target.length() - 2);
+        if (is_prefix(target_, "0x"))
+            target = substring(target_, 2, 0);
 
-        else target = target_;
+        else return false;
 
-        if (is_prefix(target, "-") || target.length() != 4)
+        if (target.length() != 8)
             return false;
 
         for (std::string::iterator i = target.begin(); i != target.end(); ++i) {
@@ -132,30 +155,13 @@ namespace weird {
         return true;
     }
 
-    bool is_hex32(std::string& target_) {
+    bool is_x64(std::string target_) {
         std::string target;
 
-        if (is_suffix(target_, "x") || is_suffix(target_, "h"))
-            target = substring(target_, 0, target.length() - 2);
+        if (is_prefix(target_, "0x"))
+            target = substring(target_, 2, 0);
 
-        else target = target_;
-
-        if (is_prefix(target_, "-") || target.length() != 8)
-            return false;
-
-        for (std::string::iterator i = target.begin(); i != target.end(); ++i) {
-            if (!isxdigit(*i))
-                return false;
-        }
-        return true;
-    }
-
-    bool is_hex64(std::string& target_) {
-        std::string target;
-        if (is_prefix(target_, "x"))
-            target = substring(target_, 0, target.length() - 2);
-
-        else target = target_;
+        else return false;
 
         if (target.length() != 16)
             return false;
@@ -167,72 +173,67 @@ namespace weird {
         return true;
     }
 
-    bool to_boolean(std::string& target_) {
-        if ((target_ == "#t")
-        or  (target_ == "true")
-        or  (target_ == "True")
-        or  (target_ == "TRUE"))
-            return true;
-        
-        else if ((target_ == "#f")
-             or  (target_ == "false")
-             or  (target_ == "False")
-             or  (target_ == "FALSE"))
-            return false;
-        
-        return true;
-
-    }
-
-    float to_float(std::string& target_) {
-        float out;
+    double to_double(std::string target_) {
+        double out;
         std::stringstream ss;
         ss << target_;
         ss >> out;
         return out;
     }
 
-    int to_integer(std::string& target_) {
+    int to_integer(std::string target_) {
         int out;
         std::stringstream ss;
-        ss << target_;
+
+        if (is_suffix(target_, "i") || is_suffix(target_, "d"))
+            ss << substring(target_, 0, 1);
+        
+        else ss << target_;
+        
         ss >> out;
         return out;
     }
 
-    std::uint8_t to_u8(std::string& target_) {
-        std::int16_t out;
+    std::uint8_t to_u8(std::string target_) {
+        unsigned out;
         std::stringstream ss;
-        ss << target_;
+        ss << std::hex << target_;
         ss >> out;
         return (std::uint8_t)out;
     }
 
-    std::uint16_t to_u16(std::string& target_) {
-        std::uint16_t out;
+    std::uint16_t to_u16(std::string target_) {
+        unsigned out;
         std::stringstream ss;
-        ss << target_;
+        ss << std::hex << target_;
         ss >> out;
-        return out;
+        return (std::uint16_t)out;
     }
 
-    std::uint32_t to_u32(std::string& target_) {
-        std::uint32_t out;
+    std::uint32_t to_u32(std::string target_) {
+        unsigned out;
         std::stringstream ss;
-        ss << target_;
+        ss << std::hex << target_;
         ss >> out;
-        return out;
+        return (std::uint32_t)out;
     }
     
-    std::uint64_t to_u64(std::string& target_) {
-        std::uint64_t out;
+    std::uint64_t to_u64(std::string target_) {
+        unsigned out;
         std::stringstream ss;
-        ss << target_;
+        ss << std::hex << target_;
         ss >> out;
-        return out;
+        return (std::uint64_t)out;
     }
 
-
-
+    int to_boolean(std::string target_) {
+        if (target_ == "true" || target_ == "TRUE")
+            return 1;
+        
+        else if (target_ == "false" || target_ == "FALSE")
+            return 0;
+        
+        return -1;
+    }
 
 }
