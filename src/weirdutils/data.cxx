@@ -44,12 +44,12 @@ namespace weird {
 		std::stringstream ss;
 		std::string       printable;
 
-		std::int32_t    indent    = 1,
-						relPos    = 0,
-						nulls     = 0,
-						zeros     = 0,
-		           		outLenA   = 0,
-		           		outLenB   = 0;
+		std::int32_t      indent    = 1,
+				  relPos    = 0,
+				  nulls     = 0,
+				  zeros     = 0,
+		           	  outLenA   = 0,
+		           	  outLenB   = 0;
 
 		std::uint8_t *tempBuf, 
 		              tempChar;
@@ -110,14 +110,17 @@ namespace weird {
 	}
 	
 
-	void scramble(charbuffer_t& target_, std::int16_t shift_[]) {
-		bytebuffer_t bytes;
-		bytes.data = (std::uint8_t*)const_cast<char*>(target_.data);
+	void scramble(charbuffer_t& buffer_, std::vector<std::int16_t> algorithem_) {
+		bytebuffer_t bytes = {
+			reinterpret_cast<std::uint8_t*>(const_cast<char*>(buffer_.data)),
+			0
+		};
 
-		for (auto i = shift_; i; i++) {
-			for (bytes.size = 0; bytes.size < target_.size; bytes.size++) {
-				bytes.data[bytes.size] += (*i);
+		for (auto i = algorithem_.begin(); i != algorithem_.end(); ++i) {
+			for (bytes.size = 0; bytes.size < buffer_.size; bytes.size++) {
+				bytes.data[bytes.size] += (*i) % 255;
 			}
 		}
 	}
 }
+
