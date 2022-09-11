@@ -36,10 +36,8 @@
 #define IDT_WEIRD_UTILS_CONFIGURATION_H
 
 #define IDT_WEIRD_UTILS_VERSION_MAJOR 0
-#define IDT_WEIRD_UTILS_VERSION_MINOR 0
-
-#define IDT_WEIRD_UTILS_TESTING       true
-#define IDT_WEIRD_UTILS_RELEASE       false
+#define IDT_WEIRD_UTILS_VERSION_MINOR 1
+#define IDT_WEIRD_UTILS_VERSION_PATCH 3
 
 
 /* some definitions to make the c++ objects usable
