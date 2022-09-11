@@ -110,13 +110,13 @@ namespace weird {
 	}
 	
 
-	void scramble(charbuffer_t& buffer_, std::vector<std::int16_t> algorithem_) {
+	void scramble(charbuffer_t& buffer_, std::vector<std::int16_t> algo_) {
 		bytebuffer_t bytes = {
 			reinterpret_cast<std::uint8_t*>(const_cast<char*>(buffer_.data)),
 			0
 		};
 
-		for (auto i = algorithem_.begin(); i != algorithem_.end(); ++i) {
+		for (auto i = algo_.begin(); i != algo_.end(); ++i) {
 			for (bytes.size = 0; bytes.size < buffer_.size; bytes.size++) {
 				bytes.data[bytes.size] += (*i) % 255;
 			}
