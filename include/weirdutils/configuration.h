@@ -1,5 +1,5 @@
 /*
- * dlconfiguration.h
+ * configuration.h
  *
  * BSD 3-Clause License
  * 
