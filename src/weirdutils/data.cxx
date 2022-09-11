@@ -44,7 +44,7 @@ namespace weird {
 		std::stringstream ss;
 		std::string       printable;
 
-		std::int32_t      indent    = 1,
+		std::int32_t	  indent    = 1,
 				  relPos    = 0,
 				  nulls     = 0,
 				  zeros     = 0,
