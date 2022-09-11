@@ -43,7 +43,7 @@ namespace weird {
     typedef std::vector<databuffer_t> slicevec_t;
 
     IDT_WEIRD_API void hexshit(databuffer_t& value);
-    IDT_WEIRD_API void scramble(charbuffer_t&, std::uint16_t algorithem[]);
+    IDT_WEIRD_API void scramble(charbuffer_t& buffer_, std::vector<std::int8_t> algo_);
 }
 
 #endif
