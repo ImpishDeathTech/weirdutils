@@ -1,5 +1,5 @@
 /*
- * dlexception.hxx
+ * exception.hxx
  *
  * BSD 3-Clause License
  * 
@@ -35,6 +35,7 @@
 #ifndef IDT_WEIRD_EXCEPTION_HXX
 #define IDT_WEIRD_EXCEPTION_HXX
 #include <exception>
+#include <string>
 
 extern "C" {
 #include <weirdutils/dlfunctions.h>
