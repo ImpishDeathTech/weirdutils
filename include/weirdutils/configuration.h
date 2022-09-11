@@ -92,7 +92,7 @@ typedef void* dlptr_t; // pointer type for raw data pointers produced by the dls
             
         /* @FreeBSD Manual :
          *      Prevents unload of the loaded object on dlclose() (dlfree()).	
-         *      The same behaviour may be requested by -z nodelete option of the static linker ld.
+	 *      The same behaviour may be requested by -z nodelete option of the static linker ld.
          */
         #define DL_NODELETE 0x00001000
 
