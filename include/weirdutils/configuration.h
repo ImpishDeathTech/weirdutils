@@ -85,14 +85,14 @@ typedef void* dlptr_t; // pointer type for raw data pointers produced by the dls
         /* All symbols are made available for realocation processing by other modules
          *
          * @FreeBSD Manual :
-         *      Symbols in this shared object and its DAG of needed objects will be available for resolving undefined references only from
-	  *      other objects in the same DAG.  This is the default, but it may be specified explicitly with this flag.  
+	 *      Symbols in this shared object and its DAG of needed objects will be available for resolving undefined references only from
+	 *      other objects in the same DAG.  This is the default, but it may be specified explicitly with this flag.  
          */
         #define DL_GLOBAL 0x00000100
             
         /* @FreeBSD Manual :
          *      Prevents unload of the loaded object on dlclose() (dlfree()).	
-	  *      The same behaviour may be requested by -z nodelete option of the static linker ld.
+	 *      The same behaviour may be requested by -z nodelete option of the static linker ld.
          */
         #define DL_NODELETE 0x00001000
 
