@@ -55,6 +55,10 @@ namespace dl {
         symbol_t symbol(symbol_);
         this->insert(symbol, data_);
     }
+    
+    void registry_t::clearPtr() {
+        m_ptr.clear();
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // loader_t implementation
