@@ -56,7 +56,7 @@ namespace dl {
         this->insert(symbol, data_);
     }
     
-    void registry_t::clearPtr() {
+    void registry_t::clear() {
         m_ptr.clear();
     }
 
