@@ -68,6 +68,9 @@ namespace dl {
             */
             void    insert(symbol_t symbol_, dlptr_t data_);
             void    insert(dlcstr_t symbol_, dlptr_t data_);
+            
+            // clears the function pointers
+            void    clear();
 
            /* Fast cast the symbol using these template functions
             * @param symbol_ = the symbol, of course
