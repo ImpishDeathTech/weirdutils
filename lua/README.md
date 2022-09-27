@@ -31,7 +31,7 @@ e = enumerate(0, 'a', 'b', 'c', 'd')  -- will produce: { a = 0, b = 1, c = 2, d 
 e = enumerate(-4, 'a', 'b', 'c', 'd') -- will produce: { a = -4, b = -3, c = -2, d = -1 }
 ```
 
-# string.split(target, pattern)
+## string.split(target, pattern)
 produces an array table of the resulting strings
 
 ```lua
@@ -63,7 +63,7 @@ s = 'suffix: .WAD'
 string.suffix(s, '.WAD') -- will produce: true
 ```
 
-# table.shallowcopy(target)
+## table.shallowcopy(target)
 preforms a shallow copy of a given table. This **will not** copy subtables, any subtables will be copied as references to the original table's subtables
 
 ```lua
