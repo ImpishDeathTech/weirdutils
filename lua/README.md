@@ -118,4 +118,6 @@ addr = table.address(t) -- produces a string akin to '0x563b7a202cc0'
 ```
 # License
 
-This module is free software, as such, you can use, redistribute, and/or modify it under the terms of the BSD 3-Clause license. See [LICENSE](https://github.com/ImpishDeathTech/weirdutils/blob/master/LICENSE) for details.
+This module is free software, as such, you can use, redistribute, and/or modify it under the terms of the BSD 3-Clause license. 
+
+See [LICENSE](https://github.com/ImpishDeathTech/weirdutils/blob/master/LICENSE) for details.
