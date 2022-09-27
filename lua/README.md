@@ -98,7 +98,7 @@ t = {
 t2 = table.deepcopy(t) -- will produce: { mobius = 'an awseome founder of Heavy Metal/Metal Hurlant Magazine!', meaningoflife = 42, window = { height = 600, width = 800, title = 'terminal } }
 ```
 
-# table.address(table)
+# table.address(target)
 produces a string containing just the memory address of a table, typically only seen with the tostring() function, without 'table' or `__name` prefixed.
 
 This can also be attained using `string.split(tostring(table), ': ')`, but was provided for the convenience, if you require such a functionality as I do.
