@@ -81,7 +81,7 @@ t2 = table.shallowcopy(t) -- will produce: { mobius = 'an awseome founder of Hea
 ```
 
 ## table.deepcopy(target)
-preforms a recursive deep copy of a given table. This function is implemented in the absolute most efficiant, simple manner we could devise so far.
+preforms a recursive deep copy of a given table. This function is implemented in the absolute most efficiant, simple manner I could devise so far.
 
 If the table contains a metatable, or their subtables contain any metatables or too many subtables, this function will fail with a Stack Overflow error
 ```lua
