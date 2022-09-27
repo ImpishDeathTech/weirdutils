@@ -1,7 +1,7 @@
 -- 
 -- weirdutils.lua
 -- 
--- Copyright (c) 2022, Christopher Stephen Rafuse, ImpishDeathTech
+-- Copyright (c) 2022, Christopher Stephen Rafuse
 -- All rights reserved.
 --
 -- BSD 3-Clause (see https://github.com/ImpishDeathTech/weirdutils/blob/master/LICENSE) for details
