@@ -9,7 +9,7 @@ Either drop the module into an existing project, or place in lua/5.4 directory, 
 require('weirdutils')
 ```
 
-# badargument(narg, funcname, expected, got)
+## badargument(narg, funcname, expected, got)
 produces a string formatted in the "bad argument #narg to 'funcname' (type expected, got type)" error style
 
 ```lua
@@ -22,7 +22,7 @@ function add(x, y)
 end
 ```
 
-# enumerate(from, ...)
+## enumerate(from, ...)
 produces an enumerated table. If argument 'from' is a number, it will enumerate from that number
 
 ```lua
@@ -42,7 +42,7 @@ t = string.split(s)         -- will produce: { 'my', 'name', 'is', 'mud' }
 t2 = string.split(s2, ': ') -- will produce: { 'suffix', '.WAD' }
 ```
 
-# string.prefix(target, prefix)
+## string.prefix(target, prefix)
 checks the prefix of the given string, and returns a boolean accordingly
 
 ```lua
@@ -55,7 +55,7 @@ else
 end
 ```
 
-# string.suffix(target, suffix)
+## string.suffix(target, suffix)
 same as the above, but for suffixes
 
 ```lua
@@ -80,7 +80,7 @@ t = {
 t2 = table.shallowcopy(t) -- will produce: { mobius = 'an awseome founder of Heavy Metal/Metal Hurlant Magazine!', meaningoflife = 42, window = t.window }
 ```
 
-# table.deepcopy(target)
+## table.deepcopy(target)
 preforms a recursive deep copy of a given table. This function is implemented in the absolute most efficiant, simple manner we could devise so far.
 
 If the table contains a metatable, or their subtables contain any metatables or too many subtables, this function will fail with a Stack Overflow error
@@ -98,7 +98,7 @@ t = {
 t2 = table.deepcopy(t) -- will produce: { mobius = 'an awseome founder of Heavy Metal/Metal Hurlant Magazine!', meaningoflife = 42, window = { height = 600, width = 800, title = 'terminal } }
 ```
 
-# table.address(target)
+## table.address(target)
 produces a string containing just the memory address of a table, typically only seen with the tostring() function, without 'table' or `__name` prefixed.
 
 This can also be attained using `string.split(tostring(table), ': ')`, but was provided for the convenience, if you require such a functionality as I do.
